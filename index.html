@@ -3,194 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DMF SYSTEM | Sistema de Gestão</title>
+<title>Sysmart Sistemas</title>
 
 <style>
-:root{
-    --primary:#00ffcc;
-    --bg:#0d1117;
-    --card:#161b22;
-    --text:#e6edf3;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-    font-family: Arial;
-    background: var(--bg);
-    color: var(--text);
-}
-
-/* HERO */
-.hero{
-    text-align:center;
-    padding:80px 20px;
-}
-
-.hero h1{
-    font-size:42px;
-}
-
-.hero p{
-    margin-top:15px;
-    font-size:18px;
-    opacity:0.8;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:25px;
-    background:var(--primary);
-    padding:15px 30px;
-    color:#000;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-/* SEÇÕES */
-section{
-    padding:60px 20px;
-    max-width:1100px;
-    margin:auto;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
-
-.card{
-    background:var(--card);
-    padding:20px;
-    border-radius:10px;
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-}
-
-/* DEMO */
-.demo{
-    background:#000;
-    padding:20px;
-    border-radius:10px;
-}
-
-.chat{
-    background:#111;
-    height:220px;
-    overflow:auto;
-    padding:10px;
-    border-radius:5px;
-}
-
-.msg{
-    background:#222;
-    padding:8px;
-    margin-bottom:5px;
-    border-radius:5px;
-}
-
-/* CTA */
-.cta{
-    text-align:center;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:20px;
-    opacity:0.6;
-}
+body{font-family:Arial;margin:0;background:#f5f7fa;}
+nav{background:#fff;padding:15px;display:flex;justify-content:space-between;}
+nav a{text-decoration:none;margin:0 10px;color:#333;}
+.hero{text-align:center;padding:100px 20px;background:#007bff;color:#fff;}
+.btn{padding:15px 25px;background:#fff;color:#007bff;text-decoration:none;border-radius:5px;}
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-    <h1>Controle total do seu negócio com o DMF SYSTEM</h1>
-    <p>Sistema completo para gestão, atendimento e automação de processos</p>
-
-    <a href="https://wa.me/5544984531288?text=Quero%20ver%20a%20demonstracao%20do%20DMF%20System" class="btn">
-        Solicitar Demonstração
-    </a>
+<nav>
+<h3>Sysmart Sistemas</h3>
+<div>
+<a href="index.html">Home</a>
+<a href="sistema.html">Sistema</a>
+<a href="contato.html">Contato</a>
 </div>
+</nav>
 
-<!-- FUNCIONALIDADES -->
-<section>
-    <h2>🚀 Funcionalidades completas</h2>
-    <div class="grid">
-        <div class="card">💰 Controle financeiro completo</div>
-        <div class="card">📦 Gestão de estoque inteligente</div>
-        <div class="card">🧾 Emissão de notas fiscais</div>
-        <div class="card">📊 Relatórios em tempo real</div>
-        <div class="card">👥 Multiusuários</div>
-        <div class="card">🤖 Automação de atendimento</div>
-    </div>
-</section>
-
-<!-- BENEFÍCIOS -->
-<section>
-    <h2>💡 Por que usar o DMF SYSTEM?</h2>
-    <div class="grid">
-        <div class="card">✔️ Reduza erros operacionais</div>
-        <div class="card">✔️ Aumente seus lucros</div>
-        <div class="card">✔️ Controle total da sua empresa</div>
-        <div class="card">✔️ Decisões com base em dados</div>
-    </div>
-</section>
-
-<!-- DEMONSTRAÇÃO -->
-<section>
-    <h2>💻 Veja como funciona</h2>
-
-    <div class="demo">
-        <div class="chat" id="chat">
-            <div class="msg">Cliente: Olá, preciso de informações</div>
-            <div class="msg">Sistema: Claro! Como posso ajudar?</div>
-        </div>
-
-        <input id="input" placeholder="Digite..." style="width:100%;margin-top:10px;padding:10px;">
-    </div>
-</section>
-
-<!-- CTA FINAL -->
-<section class="cta">
-    <h2>🔥 Quer ver funcionando na prática?</h2>
-    <p>Fale comigo e veja o sistema em ação na sua empresa</p>
-
-    <a href="https://wa.me/5544984531288?text=Quero%20testar%20o%20DMF%20System" class="btn">
-        Solicitar Demonstração
-    </a>
-</section>
-
-<footer>
-    © 2026 DMF SYSTEM - Todos os direitos reservados
-</footer>
-
-<script>
-// CHAT DEMO SIMULADO
-const input = document.getElementById("input");
-const chat = document.getElementById("chat");
-
-input.addEventListener("keypress", function(e){
-    if(e.key === "Enter"){
-        const msg = input.value;
-
-        chat.innerHTML += `<div class="msg">Você: ${msg}</div>`;
-        input.value = "";
-
-        setTimeout(()=>{
-            chat.innerHTML += `<div class="msg">Sistema: Resposta automática do DMF System</div>`;
-            chat.scrollTop = chat.scrollHeight;
-        }, 700);
-    }
-});
-</script>
+<div class="hero">
+<h1>Gestão completa para sua empresa</h1>
+<p>Controle financeiro, estoque e atendimento em um só lugar</p>
+<a href="contato.html" class="btn">Solicitar Demonstração</a>
+</div>
 
 </body>
 </html>
