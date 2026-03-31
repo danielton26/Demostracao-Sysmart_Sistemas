@@ -3,33 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sysmart Sistemas</title>
+<title>Sysmart Sistemas - Demonstração</title>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 <style>
-body{font-family:Arial;margin:0;background:#f5f7fa;}
-nav{background:#fff;padding:15px;display:flex;justify-content:space-between;}
-nav a{text-decoration:none;margin:0 10px;color:#333;}
-.hero{text-align:center;padding:100px 20px;background:#007bff;color:#fff;}
-.btn{padding:15px 25px;background:#fff;color:#007bff;text-decoration:none;border-radius:5px;}
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f5f7fa;
+    color:#111;
+}
+
+/* HERO */
+.hero{
+    background:linear-gradient(120deg,#007bff,#00c6ff);
+    color:#fff;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:40px;
+}
+
+.hero p{
+    font-size:18px;
+    opacity:0.9;
+}
+
+/* BOTÃO */
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:15px 25px;
+    background:#25D366;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* SEÇÕES */
+section{
+    padding:60px 20px;
+    max-width:1000px;
+    margin:auto;
+}
+
+/* CARDS */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* QR CODE */
+#qrcode{
+    margin-top:30px;
+}
+
+/* RODAPÉ */
+.footer{
+    background:#111;
+    color:#fff;
+    padding:50px 20px;
+    margin-top:40px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.footer a{
+    color:#25D366;
+    text-decoration:none;
+}
+
+iframe{
+    width:100%;
+    height:250px;
+    border:0;
+    border-radius:10px;
+}
 </style>
 </head>
 
 <body>
 
-<nav>
-<h3>Sysmart Sistemas</h3>
-<div>
-<a href="index.html">Home</a>
-<a href="sistema.html">Sistema</a>
-<a href="contato.html">Contato</a>
-</div>
-</nav>
-
+<!-- HERO -->
 <div class="hero">
-<h1>Gestão completa para sua empresa</h1>
-<p>Controle financeiro, estoque e atendimento em um só lugar</p>
-<a href="contato.html" class="btn">Solicitar Demonstração</a>
+
+    <h1>Sysmart Sistemas</h1>
+    <p>Soluções completas para gestão empresarial moderna</p>
+
+    <a class="btn" href="https://wa.me/5544999730759?text=Olá,%20quero%20uma%20demonstração%20do%20sistema">
+        📲 Solicitar Demonstração
+    </a>
+
+    <div id="qrcode"></div>
+    <p>📷 Escaneie para acessar a demonstração</p>
 </div>
+
+<!-- FUNCIONALIDADES -->
+<section>
+    <h2>Funcionalidades do Sistema</h2>
+
+    <div class="grid">
+        <div class="card">📊 Controle Financeiro</div>
+        <div class="card">📦 Estoque Inteligente</div>
+        <div class="card">👥 Multiusuários</div>
+        <div class="card">⚡ Automação de Processos</div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section style="text-align:center;">
+    <h2>Pronto para melhorar sua empresa?</h2>
+    <p>Solicite uma demonstração agora mesmo</p>
+
+    <a class="btn" href="https://wa.me/5544999730759?text=Quero%20ver%20a%20demonstração%20do%20sistema">
+        Falar no WhatsApp
+    </a>
+</section>
+
+<!-- RODAPÉ -->
+<div class="footer">
+
+    <div class="footer-grid">
+
+        <div>
+            <h3>Contato</h3>
+
+            <p>📍 Av. Mauá, 2109 - Zona 03<br>
+            Maringá - PR, 87050-020 - Sala 10</p>
+
+            <p>
+                📞 <a href="tel:+5544999730759">(44) 99973-0759</a>
+            </p>
+
+            <p>
+                💬 <a href="https://wa.me/5544999730759?text=Olá,%20quero%20uma%20demonstração">WhatsApp</a>
+            </p>
+        </div>
+
+        <div>
+            <h3>Localização</h3>
+
+            <iframe
+                src="https://www.google.com/maps?q=Av.+Mauá,+2109,+Maringá&output=embed">
+            </iframe>
+        </div>
+
+    </div>
+
+    <p style="text-align:center;margin-top:30px;color:#aaa;">
+        © 2026 Sysmart Sistemas - Todos os direitos reservados
+    </p>
+
+</div>
+
+<script>
+// QR CODE automático
+QRCode.toCanvas(document.getElementById('qrcode'), window.location.href);
+</script>
 
 </body>
 </html>
