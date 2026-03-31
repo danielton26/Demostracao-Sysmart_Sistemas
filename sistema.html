@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sysmart Sistemas - Sistema</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{font-family:Arial;margin:0;background:#f5f7fa;}
+nav{background:#fff;padding:15px;display:flex;justify-content:space-between;}
+nav a{text-decoration:none;margin:0 10px;color:#333;}
+.container{padding:40px;}
+.card{background:#fff;padding:20px;border-radius:10px;margin-bottom:20px;}
+</style>
+</head>
+
+<body>
+
+<nav>
+<h3>Sysmart Sistemas</h3>
+<div>
+<a href="index.html">Home</a>
+<a href="sistema.html">Sistema</a>
+<a href="contato.html">Contato</a>
+</div>
+</nav>
+
+<div class="container">
+<h2>Dashboard do Sistema</h2>
+
+<div class="card">
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+<script>
+new Chart(document.getElementById("chart"),{
+type:"line",
+data:{
+labels:["Jan","Fev","Mar","Abr"],
+datasets:[{label:"Vendas",data:[10,20,30,25]}]
+}
+});
+</script>
+
+</body>
+</html>

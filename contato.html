@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sysmart Sistemas - Contato</title>
+
+<style>
+body{font-family:Arial;margin:0;background:#f5f7fa;}
+nav{background:#fff;padding:15px;display:flex;justify-content:space-between;}
+nav a{text-decoration:none;margin:0 10px;color:#333;}
+.container{padding:40px;text-align:center;}
+.btn{padding:15px 25px;background:#007bff;color:#fff;text-decoration:none;border-radius:5px;}
+#location{margin-top:20px;color:#555;}
+</style>
+</head>
+
+<body>
+
+<nav>
+<h3>Sysmart Sistemas</h3>
+<div>
+<a href="index.html">Home</a>
+<a href="sistema.html">Sistema</a>
+<a href="contato.html">Contato</a>
+</div>
+</nav>
+
+<div class="container">
+<h1>Solicitar Demonstração</h1>
+<p>Entre em contato agora</p>
+
+<a href="https://wa.me/5544999730759?text=Quero%20uma%20demonstracao%20do%20sistema" class="btn">
+Falar no WhatsApp
+</a>
+
+<div id="location">Detectando localização...</div>
+
+</div>
+
+<script>
+async function getLocation(){
+try{
+const res = await fetch("https://ipwho.is/");
+const data = await res.json();
+
+document.getElementById("location").innerText =
+`Você está em: ${data.city}, ${data.country}`;
+}catch{
+document.getElementById("location").innerText =
+"Não foi possível obter localização";
+}
+}
+
+getLocation();
+</script>
+
+</body>
+</html>
