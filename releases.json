@@ -3,9 +3,9 @@
     "version": "2.0",
     "date": "Abril 2026",
     "changes": [
-      { "type": "new", "text": "Interface totalmente redesenhada" },
-      { "type": "improve", "text": "Performance otimizada" },
-      { "type": "fix", "text": "Correção de login" }
+      { "type": "new", "text": "Nova interface" },
+      { "type": "improve", "text": "Melhor performance" },
+      { "type": "fix", "text": "Correção de bugs" }
     ]
   },
   {
