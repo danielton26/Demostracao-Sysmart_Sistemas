@@ -1,0 +1,18 @@
+[
+  {
+    "version": "2.0",
+    "date": "Abril 2026",
+    "changes": [
+      { "type": "new", "text": "Interface totalmente redesenhada" },
+      { "type": "improve", "text": "Performance otimizada" },
+      { "type": "fix", "text": "Correção de login" }
+    ]
+  },
+  {
+    "version": "1.0",
+    "date": "Janeiro 2026",
+    "changes": [
+      { "type": "new", "text": "Lançamento inicial" }
+    ]
+  }
+]
