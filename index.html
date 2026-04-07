@@ -68,6 +68,21 @@
       border: 1px solid var(--border);
     }
 
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .version img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      padding: 4px;
+    }
+
     .date {
       color: var(--muted);
       font-size: 13px;
@@ -113,18 +128,24 @@
     menu.innerHTML = '';
 
     data.forEach(v => {
-      // menu
+      // MENU
       const link = document.createElement('a');
       link.href = '#' + v.version;
       link.innerText = 'v' + v.version;
       menu.appendChild(link);
 
-      // conteúdo
+      // CONTEÚDO
       const div = document.createElement('div');
       div.className = 'version';
       div.id = v.version;
 
-      let html = `<h2>Versão ${v.version}</h2>`;
+      let html = `
+        <div class="header">
+          ${v.image ? `<img src="${v.image}" alt="logo">` : ""}
+          <h2>Versão ${v.version}</h2>
+        </div>
+      `;
+
       html += `<div class="date">${v.date}</div>`;
 
       v.changes.forEach(c => {
@@ -146,7 +167,7 @@
     });
   }
 
-  // 🔥 Aqui carrega o JSON externo
+  // Carrega JSON
   fetch('releases.json')
     .then(res => res.json())
     .then(data => render(data))
