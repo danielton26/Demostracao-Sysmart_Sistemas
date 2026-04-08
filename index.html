@@ -7,60 +7,54 @@
 
 <style>
 :root {
-  --bg: #0b1220;
-  --sidebar: #0f172a;
+  --bg: #0f172a;
+  --sidebar: #020617;
   --card: #111827;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
   --border: #1f2937;
   --accent: #3b82f6;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
-  font-family: Inter, Arial;
+  font-family: Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
-}
-
-/* HEADER */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: var(--sidebar);
   display: flex;
-  align-items: center;
-  padding: 0 20px;
-  border-bottom: 1px solid var(--border);
-  z-index: 10;
-}
-
-.header img {
-  height: 32px;
 }
 
 /* SIDEBAR */
 .sidebar {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 250px;
-  height: calc(100vh - 60px);
+  width: 260px;
   background: var(--sidebar);
+  height: 100vh;
   padding: 20px;
+  box-sizing: border-box;
   border-right: 1px solid var(--border);
-  overflow-y: auto;
+  position: fixed;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  max-width: 140px;
+  background: white;
+  padding: 8px;
+  border-radius: 10px;
 }
 
 .search {
   width: 100%;
   padding: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   border-radius: 8px;
   border: none;
   background: var(--card);
@@ -71,33 +65,58 @@ body {
   display: block;
   color: var(--muted);
   text-decoration: none;
+  margin: 6px 0;
   padding: 6px;
   border-radius: 6px;
-  margin-bottom: 4px;
+  transition: 0.2s;
 }
 
-.sidebar a.active {
-  background: var(--accent);
+.sidebar a:hover {
+  background: var(--card);
   color: white;
 }
 
 /* CONTENT */
 .content {
-  margin-left: 250px;
-  margin-top: 60px;
+  margin-left: 260px;
   padding: 40px;
   max-width: 900px;
 }
 
-/* VERSION */
+/* VERSION CARD */
 .version {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: var(--card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s forwards;
 }
 
-.version h2 {
-  margin-bottom: 5px;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* HEADER VERSION */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  background: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* DATE */
 .date {
   color: var(--muted);
   font-size: 13px;
@@ -106,7 +125,8 @@ body {
 
 /* TAGS */
 .tag {
-  padding: 2px 8px;
+  display: inline-block;
+  padding: 3px 8px;
   border-radius: 6px;
   font-size: 12px;
   margin-right: 6px;
@@ -121,13 +141,12 @@ body {
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <img src="images/logo.png">
-</div>
-
 <!-- SIDEBAR -->
 <div class="sidebar">
+  <div class="logo">
+    <img src="images/logo.png">
+  </div>
+
   <input class="search" placeholder="Buscar..." oninput="filterVersions(this.value)">
   <div id="menu"></div>
 </div>
@@ -156,15 +175,20 @@ function render(data) {
     const link = document.createElement('a');
     link.href = '#' + v.version;
     link.innerText = 'v' + v.version;
-    link.dataset.target = v.version;
     menu.appendChild(link);
 
-    // CONTENT
+    // CARD
     const div = document.createElement('div');
     div.className = 'version';
     div.id = v.version;
 
-    let html = `<h2>Versão ${v.version} ${index === 0 ? '🔥' : ''}</h2>`;
+    let html = `
+      <div class="header">
+        <h2>Versão ${v.version}</h2>
+        ${index === 0 ? '<span class="badge">Latest</span>' : ''}
+      </div>
+    `;
+
     html += `<div class="date">${v.date}</div>`;
 
     v.changes.forEach(c => {
@@ -174,35 +198,8 @@ function render(data) {
     div.innerHTML = html;
     content.appendChild(div);
   });
-
-  activateScrollSpy();
 }
 
-/* SCROLL SPY (menu ativo) */
-function activateScrollSpy() {
-  const links = document.querySelectorAll('.sidebar a');
-  const sections = document.querySelectorAll('.version');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-
-    sections.forEach(section => {
-      const top = section.offsetTop - 100;
-      if (scrollY >= top) {
-        current = section.id;
-      }
-    });
-
-    links.forEach(link => {
-      link.classList.remove('active');
-      if (link.dataset.target === current) {
-        link.classList.add('active');
-      }
-    });
-  });
-}
-
-/* SEARCH */
 function filterVersions(query) {
   query = query.toLowerCase();
   const versions = document.querySelectorAll('.version');
@@ -213,20 +210,19 @@ function filterVersions(query) {
   });
 }
 
-/* LOAD JSON */
+// CARREGAR JSON
 fetch('releases.json')
   .then(res => res.json())
   .then(data => {
-    data.sort((a, b) =>
-      b.version.localeCompare(a.version, undefined, { numeric: true })
-    );
+    // ordena automaticamente (última versão primeiro)
+    data.sort((a, b) => b.version.localeCompare(a.version, undefined, { numeric: true }));
     render(data);
   })
-  .catch(() => {
+  .catch(err => {
     document.getElementById('content').innerHTML =
       '<p>Erro ao carregar releases.json</p>';
+    console.error(err);
   });
-
 </script>
 
 </body>
