@@ -37,6 +37,7 @@ body {
   box-sizing: border-box;
   border-right: 1px solid var(--border);
   position: fixed;
+  overflow-y: auto;
 }
 
 .logo {
@@ -61,11 +62,18 @@ body {
   color: var(--text);
 }
 
+.sidebar .project-title {
+  margin-top: 15px;
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
+}
+
 .sidebar a {
   display: block;
   color: var(--muted);
   text-decoration: none;
-  margin: 6px 0;
+  margin: 4px 0;
   padding: 6px;
   border-radius: 6px;
   transition: 0.2s;
@@ -81,6 +89,14 @@ body {
   margin-left: 260px;
   padding: 40px;
   max-width: 900px;
+}
+
+/* PROJECT TITLE */
+.project-header {
+  margin-top: 40px;
+  font-size: 22px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 5px;
 }
 
 /* VERSION CARD */
@@ -102,7 +118,6 @@ body {
   }
 }
 
-/* HEADER VERSION */
 .header {
   display: flex;
   align-items: center;
@@ -116,14 +131,12 @@ body {
   font-size: 12px;
 }
 
-/* DATE */
 .date {
   color: var(--muted);
   font-size: 13px;
   margin-bottom: 10px;
 }
 
-/* TAGS */
 .tag {
   display: inline-block;
   padding: 3px 8px;
@@ -169,34 +182,57 @@ function render(data) {
   content.innerHTML = '';
   menu.innerHTML = '';
 
-  data.forEach((v, index) => {
+  data.forEach(project => {
 
-    // MENU
-    const link = document.createElement('a');
-    link.href = '#' + v.version;
-    link.innerText = 'v' + v.version;
-    menu.appendChild(link);
+    // HEADER DO PROJETO
+    const projectHeader = document.createElement('div');
+    projectHeader.className = 'project-header';
+    projectHeader.innerText = project.project;
+    content.appendChild(projectHeader);
 
-    // CARD
-    const div = document.createElement('div');
-    div.className = 'version';
-    div.id = v.version;
+    // MENU - TÍTULO DO PROJETO
+    const menuTitle = document.createElement('div');
+    menuTitle.className = 'project-title';
+    menuTitle.innerText = project.project;
+    menu.appendChild(menuTitle);
 
-    let html = `
-      <div class="header">
-        <h2>Versão ${v.version}</h2>
-        ${index === 0 ? '<span class="badge">Latest</span>' : ''}
-      </div>
-    `;
+    // ORDENAR VERSÕES
+    project.releases.sort((a, b) =>
+      b.version.localeCompare(a.version, undefined, { numeric: true })
+    );
 
-    html += `<div class="date">${v.date}</div>`;
+    project.releases.forEach((v, index) => {
 
-    v.changes.forEach(c => {
-      html += `<p><span class="tag ${c.type}">${label(c.type)}</span> ${c.text}</p>`;
+      const id = project.project + '-' + v.version;
+
+      // MENU LINK
+      const link = document.createElement('a');
+      link.href = '#' + id;
+      link.innerText = 'v' + v.version;
+      menu.appendChild(link);
+
+      // CARD
+      const div = document.createElement('div');
+      div.className = 'version';
+      div.id = id;
+
+      let html = `
+        <div class="header">
+          <h2>Versão ${v.version}</h2>
+          ${index === 0 ? '<span class="badge">Latest</span>' : ''}
+        </div>
+      `;
+
+      html += `<div class="date">${v.date}</div>`;
+
+      v.changes.forEach(c => {
+        html += `<p><span class="tag ${c.type}">${label(c.type)}</span> ${c.text}</p>`;
+      });
+
+      div.innerHTML = html;
+      content.appendChild(div);
     });
 
-    div.innerHTML = html;
-    content.appendChild(div);
   });
 }
 
@@ -213,11 +249,7 @@ function filterVersions(query) {
 // CARREGAR JSON
 fetch('releases.json')
   .then(res => res.json())
-  .then(data => {
-    // ordena automaticamente (última versão primeiro)
-    data.sort((a, b) => b.version.localeCompare(a.version, undefined, { numeric: true }));
-    render(data);
-  })
+  .then(data => render(data))
   .catch(err => {
     document.getElementById('content').innerHTML =
       '<p>Erro ao carregar releases.json</p>';
