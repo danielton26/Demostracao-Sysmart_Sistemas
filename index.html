@@ -16,28 +16,20 @@
   --accent: #3b82f6;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: var(--bg);
   color: var(--text);
   display: flex;
 }
 
-/* SIDEBAR */
 .sidebar {
   width: 260px;
   background: var(--sidebar);
   height: 100vh;
   padding: 20px;
-  box-sizing: border-box;
-  border-right: 1px solid var(--border);
   position: fixed;
-  overflow-y: auto;
 }
 
 .logo {
@@ -65,63 +57,30 @@ body {
 .sidebar .project-title {
   margin-top: 15px;
   font-weight: bold;
-  color: white;
-  font-size: 14px;
 }
 
 .sidebar a {
   display: block;
   color: var(--muted);
   text-decoration: none;
-  margin: 4px 0;
   padding: 6px;
-  border-radius: 6px;
-  transition: 0.2s;
 }
 
-.sidebar a:hover {
-  background: var(--card);
-  color: white;
-}
-
-/* CONTENT */
 .content {
   margin-left: 260px;
   padding: 40px;
-  max-width: 900px;
 }
 
-/* PROJECT TITLE */
 .project-header {
-  margin-top: 40px;
   font-size: 22px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 5px;
+  margin-top: 40px;
 }
 
-/* VERSION CARD */
 .version {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   padding: 20px;
   background: var(--card);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  border-radius: 10px;
 }
 
 .badge {
@@ -134,11 +93,9 @@ body {
 .date {
   color: var(--muted);
   font-size: 13px;
-  margin-bottom: 10px;
 }
 
 .tag {
-  display: inline-block;
   padding: 3px 8px;
   border-radius: 6px;
   font-size: 12px;
@@ -148,13 +105,11 @@ body {
 .new { background: #22c55e; }
 .fix { background: #ef4444; }
 .improve { background: #3b82f6; }
-
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">
     <img src="images/logo.png">
@@ -164,7 +119,6 @@ body {
   <div id="menu"></div>
 </div>
 
-<!-- CONTENT -->
 <div class="content" id="content"></div>
 
 <script>
@@ -184,46 +138,37 @@ function render(data) {
 
   data.forEach(project => {
 
-    // HEADER DO PROJETO
-    const projectHeader = document.createElement('div');
-    projectHeader.className = 'project-header';
-    projectHeader.innerText = project.project;
-    content.appendChild(projectHeader);
+    // título do projeto
+    const header = document.createElement('div');
+    header.className = 'project-header';
+    header.innerText = project.project;
+    content.appendChild(header);
 
-    // MENU - TÍTULO DO PROJETO
+    // menu projeto
     const menuTitle = document.createElement('div');
     menuTitle.className = 'project-title';
     menuTitle.innerText = project.project;
     menu.appendChild(menuTitle);
 
-    // ORDENAR VERSÕES
-    project.releases.sort((a, b) =>
-      b.version.localeCompare(a.version, undefined, { numeric: true })
-    );
-
     project.releases.forEach((v, index) => {
 
       const id = project.project + '-' + v.version;
 
-      // MENU LINK
+      // menu link
       const link = document.createElement('a');
       link.href = '#' + id;
       link.innerText = 'v' + v.version;
       menu.appendChild(link);
 
-      // CARD
+      // card
       const div = document.createElement('div');
       div.className = 'version';
       div.id = id;
 
       let html = `
-        <div class="header">
-          <h2>Versão ${v.version}</h2>
-          ${index === 0 ? '<span class="badge">Latest</span>' : ''}
-        </div>
+        <h3>${v.version} ${index === 0 ? '<span class="badge">Latest</span>' : ''}</h3>
+        <div class="date">${v.date}</div>
       `;
-
-      html += `<div class="date">${v.date}</div>`;
 
       v.changes.forEach(c => {
         html += `<p><span class="tag ${c.type}">${label(c.type)}</span> ${c.text}</p>`;
@@ -238,22 +183,23 @@ function render(data) {
 
 function filterVersions(query) {
   query = query.toLowerCase();
-  const versions = document.querySelectorAll('.version');
-
-  versions.forEach(v => {
-    const text = v.innerText.toLowerCase();
-    v.style.display = text.includes(query) ? 'block' : 'none';
+  document.querySelectorAll('.version').forEach(v => {
+    v.style.display = v.innerText.toLowerCase().includes(query) ? 'block' : 'none';
   });
 }
 
-// CARREGAR JSON
+// 🔥 FETCH COM DEBUG (IMPORTANTE)
 fetch('releases.json')
-  .then(res => res.json())
+  .then(res => {
+    console.log('STATUS:', res.status);
+    if (!res.ok) throw new Error('Arquivo não encontrado');
+    return res.json();
+  })
   .then(data => render(data))
   .catch(err => {
+    console.error('ERRO:', err);
     document.getElementById('content').innerHTML =
-      '<p>Erro ao carregar releases.json</p>';
-    console.error(err);
+      '<h2>Erro ao carregar releases.json</h2><p>Verifique o caminho ou o nome do arquivo.</p>';
   });
 </script>
 
