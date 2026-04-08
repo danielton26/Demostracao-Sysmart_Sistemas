@@ -1,18 +1,28 @@
 [
   {
-    "version": "2.0",
-    "date": "Abril 2026",
-    "changes": [
-      { "type": "new", "text": "Nova interface" },
-      { "type": "improve", "text": "Melhor performance" },
-      { "type": "fix", "text": "Correção de bugs" }
+    "project": "Retaguarda",
+    "releases": [
+      {
+        "version": "2.0",
+        "date": "Abril 2026",
+        "changes": [
+          { "type": "new", "text": "Cadastro de clientes melhorado" },
+          { "type": "fix", "text": "Correção de relatórios" }
+        ]
+      }
     ]
   },
   {
-    "version": "1.0",
-    "date": "Janeiro 2026",
-    "changes": [
-      { "type": "new", "text": "Lançamento inicial" }
+    "project": "PDV",
+    "releases": [
+      {
+        "version": "1.5",
+        "date": "Abril 2026",
+        "changes": [
+          { "type": "new", "text": "Novo layout de vendas" },
+          { "type": "improve", "text": "Mais rápido ao finalizar compra" }
+        ]
+      }
     ]
   }
 ]
